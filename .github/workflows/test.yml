@@ -14,7 +14,7 @@ jobs:
 
     - name: Download and install
       run: |
-        curl --cookie "ADCDownloadAuth=${{ secrets.ADCDownloadAuth}}"" -L -o font_tools.dmg $FT_URL
+        curl --cookie "ADCDownloadAuth=${{ secrets.ADCDownloadAuth}}" -L -o font_tools.dmg $FT_URL
         hdiutil attach font_tools.dmg
         sudo installer -pkg /Volumes/Font\ Tools\ for\ Xcode/Font\ Tools.pkg -target /
         hdiutil detach /Volumes/Font\ Tools\ for\ Xcode
