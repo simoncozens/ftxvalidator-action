@@ -2,12 +2,22 @@ name: CI
 
 on: [push, pull_request]
 
+env:
+  FT_URL: https://download.developer.apple.com/Developer_Tools/Font_Tools_for_Xcode_15.1/Font_Tools_for_Xcode_15.1.dmg
+
 jobs:
   setup:
     runs-on: macos-latest
 
     steps:
     - uses: actions/checkout@v2
+
+    - name: Download and install
+      run: |
+        curl --cookie "ADCDownloadAuth=${{ secrets.ADCDownloadAuth}}"" -L -o font_tools.dmg $FT_URL
+        hdiutil attach font_tools.dmg
+        sudo installer -pkg /Volumes/Font\ Tools\ for\ Xcode/Font\ Tools.pkg -target /
+        hdiutil detach /Volumes/Font\ Tools\ for\ Xcode
 
     - name: Setup tmate session
       uses: mxschmitt/action-tmate@v3
